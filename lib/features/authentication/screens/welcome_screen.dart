@@ -1,4 +1,5 @@
 import 'package:buildez/features/authentication/screens/login_screen.dart';
+import 'package:buildez/features/authentication/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -37,7 +38,7 @@ class WelcomeScreen extends StatelessWidget {
                           child: const Text('LOGIN')
                       ),
                       ElevatedButton(
-                          onPressed: (){},
+                          onPressed: () => Get.to(() => const SignUpScreen()),
                           child: const Text('SIGN UP')
                       )
                     ],
