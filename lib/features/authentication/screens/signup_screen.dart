@@ -1,4 +1,7 @@
+import 'package:buildez/features/authentication/controllers/signup_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key?key}) : super(key: key);
@@ -6,6 +9,8 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final controller = Get.put(SignUpController());
+    final _formKey = GlobalKey<FormState>();
     return SafeArea(
         child: Scaffold(
             body: SingleChildScrollView(
@@ -25,12 +30,14 @@ class SignUpScreen extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodyMedium
                     ),
                     Form(
+                      key: _formKey,
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 20.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TextFormField(
+                              controller: controller.name,
                               decoration: const InputDecoration(
                                   prefixIcon: Icon(Icons.person_outline_outlined),
                                   labelText: 'Name',
@@ -40,6 +47,7 @@ class SignUpScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             TextFormField(
+                              controller: controller.email,
                               decoration: const InputDecoration(
                                   prefixIcon: Icon(Icons.email_outlined),
                                   labelText: 'Email',
@@ -48,29 +56,35 @@ class SignUpScreen extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 10),
+                              TextFormField(
+                                controller: controller.password,
+                                decoration: const InputDecoration(
+                                    prefixIcon: Icon(Icons.fingerprint),
+                                    labelText: 'Password',
+                                    hintText: 'Password',
+                                    border: OutlineInputBorder(),
+                                    suffixIcon: Icon(Icons.remove_red_eye_sharp)
+                                ),
+                              ),
+                            const SizedBox(height: 10),
                             TextFormField(
+                              controller: controller.contact,
                               decoration: const InputDecoration(
                                   prefixIcon: Icon(Icons.numbers),
                                   labelText: 'Contact',
                                   hintText: 'Contact',
-                                  border: OutlineInputBorder()
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            TextFormField(
-                              decoration: const InputDecoration(
-                                  prefixIcon: Icon(Icons.fingerprint),
-                                  labelText: 'Password',
-                                  hintText: 'Password',
                                   border: OutlineInputBorder(),
-                                  suffixIcon: Icon(Icons.remove_red_eye_sharp)
                               ),
                             ),
                             const SizedBox(height: 10),
                             SizedBox(
                               width: double.infinity,
                               child: ElevatedButton(
-                                onPressed: (){},
+                                onPressed: (){
+                                  if(_formKey.currentState!.validate()){
+                                    SignUpController.instance.registerUser(controller.email.text.trim(), controller.password.text.trim());
+                                  }
+                                },
                                 child: const Text('SIGN UP'),
                               ),
                             )
