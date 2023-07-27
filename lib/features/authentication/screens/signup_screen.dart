@@ -1,4 +1,7 @@
+import 'package:buildez/features/authentication/controllers/signup_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key?key}) : super(key: key);
@@ -6,6 +9,7 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final controller = Get.put(SignUpController());
     return SafeArea(
         child: Scaffold(
             body: SingleChildScrollView(
