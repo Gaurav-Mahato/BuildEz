@@ -1,3 +1,4 @@
+import 'package:buildez/features/repository/authentication_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class DashboardScreen extends StatelessWidget {
           ),
           body: Center(
             child: ElevatedButton(
-              onPressed: (){},
+              onPressed: (() => AuthenticationRepository.instance.logout()),
               child: const Text('LOGOUT')
             ),
           ),
