@@ -1,4 +1,5 @@
 import 'package:buildez/features/authentication/controllers/signup_controller.dart';
+import 'package:buildez/features/authentication/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -82,7 +83,14 @@ class SignUpScreen extends StatelessWidget {
                               child: ElevatedButton(
                                 onPressed: (){
                                   if(_formKey.currentState!.validate()){
-                                    SignUpController.instance.registerUser(controller.email.text.trim(), controller.password.text.trim());
+                                    // SignUpController.instance.registerUser(controller.email.text.trim(), controller.password.text.trim());
+                                    final user = UserModel(
+                                        name: controller.name.text.trim(),
+                                        email: controller.email.text.trim(),
+                                        password: controller.password.text.trim(),
+                                        contact: controller.contact.text.trim()
+                                    );
+                                    SignUpController.instance.createUser(user);
                                   }
                                 },
                                 child: const Text('SIGN UP'),
