@@ -63,7 +63,7 @@ class DashboardScreen extends StatelessWidget {
                                 shape: const StadiumBorder(),
                                 side: BorderSide.none
                               ),
-                              child: const Text('LOGOUT'),
+                              child: const Text('Logout'),
                             ),
                           ),
                           const Divider()
