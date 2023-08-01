@@ -23,4 +23,10 @@ class UserRepository extends GetxController{
           backgroundColor: Colors.redAccent.withOpacity(0.1));
         });
   }
+
+  Future<UserModel> getUserDetails(String email) async{
+    final snapshot = await _db.collection("User").where("email",isEqualTo: email).get();
+    final userData = snapshot.docs.map((e) => UserModel.fromSnapshot(e)).single;
+    return userData;
+  }
 }
