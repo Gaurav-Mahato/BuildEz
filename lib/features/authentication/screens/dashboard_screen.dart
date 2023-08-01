@@ -16,7 +16,7 @@ class DashboardScreen extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             leading: IconButton(
-              onPressed: (() => AuthenticationRepository.instance.logout()),
+              onPressed: (() => Get.back()),
               icon: const Icon(Icons.arrow_back),
             ),
             title: Text(
