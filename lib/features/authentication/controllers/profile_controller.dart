@@ -1,6 +1,8 @@
 
+import 'package:buildez/features/authentication/models/user_model.dart';
 import 'package:buildez/features/repository/authentication_repository.dart';
 import 'package:buildez/features/repository/user_repository.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends GetxController{
@@ -17,5 +19,12 @@ class ProfileController extends GetxController{
     else{
       Get.snackbar("Error", "Please log in to continue");
     }
+  }
+
+  updateRecord(UserModel user) async{
+    print('Profile controller Reached');
+    print('Points here are - ${user.points}');
+    await _userRepo.updateUserRecord(user);
+    Get.snackbar("Success", "Your points have been updated");
   }
 }

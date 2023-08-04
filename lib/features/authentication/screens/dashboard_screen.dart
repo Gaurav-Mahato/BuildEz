@@ -9,6 +9,7 @@ import 'package:get/get_core/src/get_main.dart';
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key?key}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ProfileController());
@@ -16,12 +17,12 @@ class DashboardScreen extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             leading: IconButton(
-              onPressed: (() => Get.back()),
+              onPressed: (() => AuthenticationRepository.instance.logout()),
               icon: const Icon(Icons.arrow_back),
             ),
             title: Text(
                 'Your Profile',
-                style: Theme.of(context).textTheme.headlineSmall
+                style: Theme.of(context).textTheme.headlineSmall,
             )
           ),
           body: SingleChildScrollView(
@@ -33,7 +34,13 @@ class DashboardScreen extends StatelessWidget {
                   // Data Fetch from backend -> snapshot fetched from controller which was initialized in the function
                   if(snapshot.connectionState == ConnectionState.done){
                     if(snapshot.hasData){
-                      UserModel userData = snapshot.data as UserModel;
+                      UserModel user = snapshot.data as UserModel;
+                      final id = user.id;
+                      final email = TextEditingController(text: user.email);
+                      final contact = TextEditingController(text: user.contact);
+                      final name = TextEditingController(text: user.name);
+                      final points = user.points;
+                      final password = TextEditingController(text: user.password);
                       return Column(
                         children: [
                           SizedBox(
@@ -49,21 +56,34 @@ class DashboardScreen extends StatelessWidget {
                           const SizedBox(
                             height: 10,
                           ),
-                          Text(userData.name),
-                          Text(userData.email),
+                          Text(user.name),
+                          Text('${user.points} Points'),
                           const SizedBox(
                             height: 20,
                           ),
                           SizedBox(
                             width: 200,
                             child: ElevatedButton(
-                              onPressed: (() => AuthenticationRepository.instance.logout()),
+                              onPressed: () async{
+                                final userData = UserModel(
+                                    id: id,
+                                    name: name.text.trim(),
+                                    email: email.text.trim(),
+                                    password: password.text.trim(),
+                                    contact: contact.text.trim(),
+                                    points: points
+                                );
+                                await controller.updateRecord(userData);
+                              },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.yellow,
                                 shape: const StadiumBorder(),
                                 side: BorderSide.none
                               ),
-                              child: const Text('Logout'),
+                              child: const Text(
+                                  'Update Points',
+                                  style: TextStyle(color: Colors.black),
+                              ),
                             ),
                           ),
                           const Divider()
