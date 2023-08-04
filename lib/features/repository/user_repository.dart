@@ -31,7 +31,6 @@ class UserRepository extends GetxController{
   }
 
   Future<void> updateUserRecord(UserModel user) async {
-    print(user.id);
     try{
       await _db.collection('User').doc(user.id).update(user.updatePoints());
     }
